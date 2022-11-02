@@ -83,5 +83,5 @@ If you're curious.
    /   |  |  -\    WM:         KWin
   /_-''    ''-_\   CPU:        AMD Ryzen 9 5900HX with Radeon Graphics (16) @ 3.3GHz
                    GPU:        AMD ATI Radeon RX 6800M
-                   Memory:     9550MB / 15399MB
+                   Memory:     16GB
 ```
