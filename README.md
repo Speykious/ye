@@ -49,7 +49,7 @@ $ taskset -c 0 ./ye | taskset -c 0 pv > /dev/null
 # Rust
 $ taskset -c 0 target/release/ye | taskset -c 0 pv > /dev/null
 ```
-Interestingly, I have tried both `taskset -c 0 ./ye | taskset -c 0 pv > /dev/null` (both on the same core) and `taskset -c 0 ./ye | taskset -c 1 pv > /dev/null` (both on a different core) and have found the *latter* to be 10 GiB faster for some reason. Maybe the fact that I couldn't compile a patched version of `pv` for myself played a role in that.
+Interestingly, I have tried both `taskset -c 0 ./ye | taskset -c 0 pv > /dev/null` (both on the same core) and `taskset -c 0 ./ye | taskset -c 1 pv > /dev/null` (both on a different core) and have found the *latter* to be ~16 GiB faster for some reason. Maybe the fact that I couldn't compile a patched version of `pv` for myself played a role in that.
 
 # My really not serious benchmarks
 
