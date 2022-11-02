@@ -3,7 +3,7 @@ use std::io::{self, IoSlice};
 use clap::{command, Parser};
 use nix::fcntl::{fcntl, SpliceFFlags};
 
-const BUF_LEN: usize = 2 * 1024 * 1024;
+const BUF_LEN: usize = 1024 * 1024;
 const IOV_LEN: usize = 1024;
 
 #[derive(Parser)]
@@ -21,11 +21,14 @@ struct Cli {
 fn main() -> io::Result<()> {
     let args = Cli::parse();
 
+    if let Err(e) = fcntl(1, nix::fcntl::FcntlArg::F_SETPIPE_SZ(16 * 1024 * 1024)) {
+        eprintln!("Warning: could not set pipe size (fcntl F_SETPIPE_SZ: {}). Maybe you're not piping?", e.desc());
+        std::process::exit(1);
+    };
+
     let ye = "y\n";
     let ye = ye.repeat(BUF_LEN / ye.len()).into_bytes();
     let iov = [IoSlice::new(&ye); IOV_LEN];
-
-    fcntl(1, nix::fcntl::FcntlArg::F_SETPIPE_SZ(16 * 1024 * 1024))?;
 
     if args.use_unsafe {
         unsafe {
