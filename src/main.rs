@@ -38,10 +38,11 @@ fn main() -> io::Result<()> {
 
 unsafe fn unsafe_vmsplice_loop(iov: &[IoSlice]) -> ! {
     let iov_ptr = iov.as_ptr() as *const libc::iovec;
+    let iov_len = iov.len();
     let splice_bits = SpliceFFlags::SPLICE_F_GIFT.bits();
 
     loop {
-        libc::vmsplice(1, iov_ptr, IOV_LEN, splice_bits);
+        libc::vmsplice(1, iov_ptr, iov_len, splice_bits);
     }
 }
 
