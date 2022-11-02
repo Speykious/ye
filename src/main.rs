@@ -1,18 +1,39 @@
 use std::io::{self, IoSlice};
 
+use clap::{command, Parser};
 use nix::fcntl::{fcntl, SpliceFFlags};
 
 const BUF_LEN: usize = 2 * 1024 * 1024;
 const IOV_LEN: usize = 1024;
 
+#[derive(Parser)]
+#[command(name = "ye")]
+#[command(version, author, about)]
+struct Cli {
+    #[arg(
+        long,
+        default_value_t = false,
+        help = "Whether to directly use libc's vmsplice"
+    )]
+    use_unsafe: bool,
+}
+
 fn main() -> io::Result<()> {
-    let yes = "y\n".repeat(BUF_LEN / "y\n".len()).into_bytes();
-    let iov = [IoSlice::new(&yes); IOV_LEN];
+    let args = Cli::parse();
+
+    let ye = "y\n";
+    let ye = ye.repeat(BUF_LEN / ye.len()).into_bytes();
+    let iov = [IoSlice::new(&ye); IOV_LEN];
 
     fcntl(1, nix::fcntl::FcntlArg::F_SETPIPE_SZ(16 * 1024 * 1024))?;
 
-    safe_vmsplice_loop(&iov);
-    // unsafe { unsafe_vmsplice_loop(&iov) }
+    if args.use_unsafe {
+        unsafe {
+            unsafe_vmsplice_loop(&iov);
+        }
+    } else {
+        safe_vmsplice_loop(&iov);
+    }
 }
 
 unsafe fn unsafe_vmsplice_loop(iov: &[IoSlice]) -> ! {
