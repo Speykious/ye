@@ -6,7 +6,7 @@ See [the following discussion](https://www.reddit.com/r/unix/comments/6gxduc/com
 
 Unfortunately I could not recompile `pv` myself to test it against the C implementation of `yes` that uses `vmsplice` (see [the `ye.c` file](ye.c)), but with the default `pv` program, the Rust implementation seems to be faster than the C version on my machine (about **62.0 GiB/s** in C, **62.7 GiB/s** in Rust).
 
-Not that it makes use of libc's `vmsplice` function, which is of course unsafe. Somehow, the "safe" version that uses the Nix API (which provides a safe wrapper around libc) is faster than the unsafe version that uses libc directly... My guess is that Rust was way better at optimizing that than my direct unsafe code.
+Note that it makes use of libc's `vmsplice` function, which is of course unsafe. Somehow, the "safe" version that uses the Nix API (which provides a safe wrapper around libc) is faster than the unsafe version that uses libc directly... My guess is that Rust was way better at optimizing that than my direct unsafe code.
 
 I'll do thorough serious benchmarks when I feel like it.
 
