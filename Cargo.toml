@@ -9,3 +9,7 @@ edition = "2021"
 libc = "0.2.137"
 nix = "0.25.0"
 clap = { version = "4.0.18", features = ["derive"] }
+
+[profile.release]
+lto = true
+strip = "symbols"
