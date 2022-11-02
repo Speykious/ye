@@ -74,7 +74,7 @@ Interestingly, I have tried both `taskset -c 0 ./ye | taskset -c 0 pv > /dev/nul
 
 If you're curious.
 
-```hs
+```yaml
         /\         Distro:     Arch Linux x86_64
        /  \        Kernel:     Linux 6.0.5-arch1-1
       /\   \       Shell:      zsh 5.9
