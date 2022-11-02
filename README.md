@@ -51,6 +51,8 @@ $ taskset -c 0 target/release/ye | taskset -c 0 pv > /dev/null
 ```
 Interestingly, I have tried both `taskset -c 0 ./ye | taskset -c 0 pv > /dev/null` (both on the same core) and `taskset -c 0 ./ye | taskset -c 1 pv > /dev/null` (both on a different core) and have found the *latter* to be ~16 GiB faster. I was surprised, because I assumed that the reason u/_mrb went with the former is because it's supposed to be faster due to cache affinity... On the other hand, running the two programs on their dedicated core is trivial parallelism, so maybe there's no reason to be shocked at all. Maybe the fact that I couldn't compile a patched version of `pv` for myself played a role in that.
 
+> I know nothing about cache affinity btw
+
 # My really not serious benchmarks
 
 ```sh
