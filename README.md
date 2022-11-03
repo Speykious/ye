@@ -71,7 +71,12 @@ Interestingly, I have tried both `taskset -c 0 ./ye | taskset -c 0 pv > /dev/nul
 # Rust, different cores
 ❯ taskset -c 0 target/release/ye | taskset -c 1 pv > /dev/null
  626GiB 0:00:10 [62.7GiB/s] #[ (...) <=> (...) ]
+
+# Rust (unsafe loop), different cores
+❯ taskset -c 0 target/release/ye --use-unsafe | taskset -c 1 pv > /dev/null
+ 620GiB 0:00:10 [62.0GiB/s] #[ (...) <=> (...) ]
 ```
+
 ## My machine
 
 If you're curious.
